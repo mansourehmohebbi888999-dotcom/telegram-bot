@@ -93,9 +93,10 @@ async def cmd_start(message: types.Message):
             referrer_in_channel = await check_channel_membership(referrer_id)
             cursor.execute("SELECT user_id FROM users WHERE user_id = ?", (referrer_id,))
             if cursor.fetchone() and referrer_in_channel:
+                # تغییر مقدار جایزه به 3 ستاره
                 cursor.execute("""
                     UPDATE users 
-                    SET stars = stars + 1, invites_count = invites_count + 1 
+                    SET stars = stars + 3, invites_count = invites_count + 1 
                     WHERE user_id = ?
                 """, (referrer_id,))
                 
@@ -107,7 +108,7 @@ async def cmd_start(message: types.Message):
                 try:
                     await bot.send_message(
                         referrer_id, 
-                        "🌟 **تبریک!** یک دوست با لینک دعوت شما وارد بات شد و عضو کانال گردید.\n⭐ `+1 stars` به حساب شما واریز شد."
+                        "🌟 **تبریک!** یک دوست با لینک دعوت شما وارد بات شد و عضو کانال گردید.\n⭐ `+3 stars` به حساب شما واریز شد."
                     )
                 except:
                     pass
@@ -162,9 +163,9 @@ async def get_referral_link(message: types.Message):
         f"💎 **سیستم افزایش ستاره (مجموعه دعوت)**\n\n"
         f"🔗 لینک اختصاصی شما:\n`{ref_link}`\n\n"
         f"📌 **راهنمای مهم:**\n"
-        f"• شما و دوستانتان باید **حتماً** در کانال {CHANNEL_USERNAME} عضو باشید[cite: 4].\n"
-        f"• این لینک را برای دوستان خود بفرستید[cite: 4].\n"
-        f"• به ازای هر شخصی که با لینک شما وارد بات شود و در کانال {CHANNEL_USERNAME} عضو شود، **یک stars** به صورت اتوماتیک به حساب شما اضافه می‌شود[cite: 4]."
+        f"• شما و دوستانتان باید **حتماً** در کانال {CHANNEL_USERNAME} عضو باشید.\n"
+        f"• این لینک را برای دوستان خود بفرستید.\n"
+        f"• به ازای هر شخصی که با لینک شما وارد بات شود و در کانال {CHANNEL_USERNAME} عضو شود، **3 stars** به صورت اتوماتیک به حساب شما اضافه می‌شود."
     )
 
 # --- موجودی من ---
@@ -386,4 +387,4 @@ async def receive_gift_username(message: types.Message, state: FSMContext):
     await state.clear()
 
 if __name__ == "__main__":
-    asyncio.run(dp.start_polling(bot))
+    asyncio.run(dp.start_polling(bot))    asyncio.run(dp.start_polling(bot))
